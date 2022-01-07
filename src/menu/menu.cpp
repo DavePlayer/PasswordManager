@@ -10,30 +10,37 @@ void Menu::displayMenu()
     std::cout << "\n3. Odczytaj Hasło";
     std::cout << "\n4. Wygeneruj bezpieczne Hasło";
     std::cout << "\n5. Załaduj klucz szyfrujący";
-    std::cout << "\n6. Zakończ program";
-    std::cout << "\n\nOpcja[1-5]: ";
+    std::cout << "\n6. Stwórz klucz szyfrujący";
+    std::cout << "\n7. Zakończ program";
+    std::cout << "\n\nOpcja[1-7]: ";
     std::cin >> option;
     this->manageChoice(option);
 }
 
-int Menu::manageChoice(int choice)
+int Menu::manageChoice(unsigned int choice)
 {
+    this->clearTerminal();
     switch (choice)
     {
     case 1:
         // display passwords
-        this->clearTerminal();
         std::cout << "Struktura haseł (passwd jest folderem przechowującym strukturę haseł): \n";
         system("tree passwd");
         this->displayMenu();
         break;
     case 6:
-        this->clearTerminal();
+        // generate key
+        {
+            std::cout << "Tworzenie klucza szyfrującego. Chwilę to zajmie\n";
+            std::string key = this->crypComp.createKey();
+        }
+        this->displayMenu();
+        break;
+    case 7:
         std::cout << "Do widzenia!" << std::endl;
         return 1;
         break;
     default:
-        this->clearTerminal();
         std::cout << "Niepoprawna opcja!\n";
         this->displayMenu();
     }
