@@ -1,8 +1,9 @@
 #include "menu.h"
 
-Menu::Menu(std::string clearCommand)
+Menu::Menu(std::string clearCommand, std::string examplePath)
 {
     this->clearCommand = clearCommand;
+    this->examplePath = examplePath;
 }
 
 void Menu::displayMenu()
@@ -32,7 +33,13 @@ int Menu::manageChoice(unsigned int choice)
         system("tree passwd");
         this->displayMenu();
         return 0;
-        break;
+    case 3:
+        // create password
+        this->clearTerminal();
+        this->path.initPathPicker();
+        std::cout << "\n\n";
+        // this->displayMenu();
+        return 0;
     case 6:
         // generate key
         {
@@ -50,7 +57,6 @@ int Menu::manageChoice(unsigned int choice)
                     {
                         this->clearTerminal();
                         std::cout << "Zaprzestano generacji nowego klucza.\n\n";
-                        this->displayMenu();
                     }
                     else
                     {
@@ -71,11 +77,9 @@ int Menu::manageChoice(unsigned int choice)
         }
         this->displayMenu();
         return 0;
-        break;
     case 7:
         std::cout << "Do widzenia!" << std::endl;
         return 0;
-        break;
     default:
         std::cout << "Niepoprawna opcja!\n";
         this->displayMenu();

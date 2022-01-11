@@ -4,7 +4,7 @@
 
 int main()
 {
-    Menu menu("clear");
+    Menu menu("clear", "/o2/haslo1.txt");
     menu.displayMenu();
     return 0;
 }
