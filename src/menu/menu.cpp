@@ -1,5 +1,9 @@
-#include <iostream>
 #include "menu.h"
+
+Menu::Menu(std::string clearCommand)
+{
+    this->clearCommand = clearCommand;
+}
 
 void Menu::displayMenu()
 {
@@ -27,6 +31,7 @@ int Menu::manageChoice(unsigned int choice)
         std::cout << "Struktura haseł (passwd jest folderem przechowującym strukturę haseł): \n";
         system("tree passwd");
         this->displayMenu();
+        return 0;
         break;
     case 6:
         // generate key
@@ -35,17 +40,19 @@ int Menu::manageChoice(unsigned int choice)
             std::string key = this->crypComp.createKey();
         }
         this->displayMenu();
+        return 0;
         break;
     case 7:
         std::cout << "Do widzenia!" << std::endl;
-        return 1;
+        return 0;
         break;
     default:
         std::cout << "Niepoprawna opcja!\n";
         this->displayMenu();
+        return 0;
     }
 }
-void Menu::clearTerminal(std::string command)
+void Menu::clearTerminal()
 {
-    system(command.c_str());
+    system(this->clearCommand.c_str());
 }

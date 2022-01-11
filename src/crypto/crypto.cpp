@@ -1,22 +1,23 @@
 #include "crypto.h"
-#include <random>
-#include <limits>
-#include <string>
 
 std::string Crypto::createKey()
 {
-    this->p = this->generatePrime(7);
-    this->q = this->generatePrime(this->p + 2);
-    this->n = this->p * this->q;
-    this->euler = (this->p - 1) * (this->q - 1);
-    this->e = this->coPrime(n, euler); // public
-    this->d = this->CalculateDecryptionKey(e, euler);
-    std::cout << "\n\np: " << this->p << "\nq: " << this->q << "\neuler: " << euler << "\nn=" << this->n << "\ne: " << this->e << "\nd: " << this->d << "\n\n";
+    long long int p, q, euler, n, d, e;
 
-    std::string Benc = this->encrypt("test");
-    std::cout << "encrypted = " << Benc << "\n\n";
-    std::string Bdec = this->decrypt(Benc);
-    std::cout << "decrypted = " << Bdec << "\n\n";
+    p = this->generatePrime(7);
+    q = this->generatePrime(p + 2);
+    n = p * q;
+    euler = (p - 1) * (q - 1);
+    e = this->coPrime(n, euler); // public
+    d = this->CalculateDecryptionKey(e, euler);
+    // std::cout << "\n\np: " << this->p << "\nq: " << this->q << "\neuler: " << euler << "\nn=" << this->n << "\ne: " << this->e << "\nd: " << this->d << "\n\n";
+
+    // std::string Benc = this->encrypt("test");
+    // std::cout << "encrypted = " << Benc << "\n\n";
+    // std::string Bdec = this->decrypt(Benc);
+    // std::cout << "decrypted = " << Bdec << "\n\n";
+
+    return "tett";
 }
 
 long long unsigned int Crypto::power(long long x, long long y)

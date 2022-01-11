@@ -1,12 +1,16 @@
 #ifndef MENU
 #define MENU
 #include "../crypto/crypto.h"
+#include <iostream>
 
 class Menu
 {
 public:
+    std::string clearCommand;
     Crypto crypComp;
-    void clearTerminal(std::string = "clear");
+
+    Menu(std::string clearCommand);
+    void clearTerminal();
     void displayMenu();
     int manageChoice(unsigned int choice);
 };

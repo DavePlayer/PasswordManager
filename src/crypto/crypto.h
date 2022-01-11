@@ -1,12 +1,11 @@
 #include <iostream>
 #include <random>
-#include <vector>
-#include <cmath>
+#include <iostream>
+#include <string>
 
 class Crypto
 {
 public:
-    std::string key = NULL;
     long long int p, q, euler, n, d, e;
 
     std::string createKey();
