@@ -17,7 +17,7 @@ std::string Crypto::createKey()
     // std::string Bdec = this->decrypt(Benc);
     // std::cout << "decrypted = " << Bdec << "\n\n";
 
-    return "tett";
+    return std::to_string(p) + "\n" + std::to_string(q) + "\n" + std::to_string(n) + "\n" + std::to_string(euler) + "\n" + std::to_string(e) + "\n" + std::to_string(d);
 }
 
 long long unsigned int Crypto::power(long long x, long long y)
