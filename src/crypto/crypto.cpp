@@ -20,6 +20,25 @@ std::string Crypto::createKey()
     return std::to_string(p) + "\n" + std::to_string(q) + "\n" + std::to_string(n) + "\n" + std::to_string(euler) + "\n" + std::to_string(e) + "\n" + std::to_string(d);
 }
 
+std::string Crypto::loadKey(int p, int q, int n, int euler, int e, int d)
+{
+    // std::cout << p << "\n"
+    //           << q << "\n"
+    //           << n << "\n"
+    //           << n << "\n"
+    //           << euler << "\n"
+    //           << e << "\n"
+    //           << d;
+    this->p = p;
+    this->q = q;
+    this->euler = euler;
+    this->n = n;
+    this->e = e;
+    this->d = d;
+    this->isKeyLoaded = true;
+    return std::to_string(p) + "\n" + std::to_string(q) + "\n" + std::to_string(n) + "\n" + std::to_string(euler) + "\n" + std::to_string(e) + "\n" + std::to_string(d);
+}
+
 long long unsigned int Crypto::power(long long x, long long y)
 {
     long long unsigned int res = x;

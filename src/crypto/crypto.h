@@ -7,8 +7,10 @@ class Crypto
 {
 public:
     long long int p, q, euler, n, d, e;
+    bool isKeyLoaded = false;
 
     std::string createKey();
+    std::string loadKey(int p, int q, int n, int euler, int e, int d);
     bool isPrime(int n);
     int generatePrime(int n);
     int coPrime(int n, int euler);

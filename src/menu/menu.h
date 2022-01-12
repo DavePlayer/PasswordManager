@@ -1,7 +1,7 @@
 #ifndef MENU
 #define MENU
 #include "../crypto/crypto.h"
-#include "../path/path.h"
+// #include "../path/path.h"
 #include <iostream>
 #include <fstream>
 #include <filesystem>
@@ -11,7 +11,7 @@ class Menu
 public:
     std::string clearCommand;
     Crypto crypComp;
-    Path path;
+    // Path path;
     std::fstream FileManager;
     std::string examplePath;
 

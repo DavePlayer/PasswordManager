@@ -1,5 +1,5 @@
 app: build/menu.o build/main.o build/crypto.o build/path.o
-	g++ build/main.o build/menu.o build/crypto.o build/path.o -o app.out
+	g++ build/main.o build/menu.o build/crypto.o build/path.o -o app.out -lncurses
 build/menu.o: src/menu/menu.cpp
 	g++ -std=c++17 -c src/menu/menu.cpp -o build/menu.o 
 build/main.o: src/main.cpp
