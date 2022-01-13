@@ -1,9 +1,10 @@
 #include "menu.h"
 
-Menu::Menu(std::string clearCommand, std::string examplePath)
+Menu::Menu(std::string clearCommand, std::string examplePath, std::string exampleDirectory)
 {
     this->clearCommand = clearCommand;
     this->examplePath = examplePath;
+    this->exampleDirectory = exampleDirectory;
 }
 
 void Menu::displayMenu()
@@ -33,6 +34,30 @@ int Menu::manageChoice(unsigned int choice)
         system("tree passwd");
         this->displayMenu();
         return 0;
+    case 2:
+        if (this->crypComp.isKeyLoaded == false)
+        {
+            this->clearTerminal();
+            std::cout << "Nie załadowano żadnego klucza szyfrującego!\n\n";
+        }
+        else
+        {
+            std::cout << "\n\nPodaj strukturę hasła [np. " << this->examplePath << "]: ";
+            std::string userInput;
+            std::cin >> userInput;
+            std::filesystem::path path(std::filesystem::current_path() / std::filesystem::path("passwd") / std::filesystem::path(userInput));
+            path = this->pathFinder.validatePath(path); // creates unexistent directories and files inside passwd
+            std::string password;
+            std::cout << "\n\nPodaj swoje hasło: ";
+            std::cin >> password;
+            this->FileManager.open(path, std::ios::out);
+            this->FileManager << this->crypComp.encrypt(password);
+            this->FileManager.close();
+            this->clearTerminal();
+            std::cout << "Stworzono nowe hasło!\n\n";
+        }
+        this->displayMenu();
+        return 0;
     case 3:
         // create password
         {
@@ -41,7 +66,7 @@ int Menu::manageChoice(unsigned int choice)
 
             if (this->crypComp.isKeyLoaded == true)
             {
-                std::cout << "\n\nPodaj ścieżkę do hasła ze struktury passwd [np. test/haslo1]: ";
+                std::cout << "\n\nPodaj ścieżkę do hasła ze struktury passwd [np. " << this->examplePath << "]: ";
                 std::string path;
                 std::cin >> path;
                 if (path.find(".txt") == std::string::npos)
@@ -55,6 +80,7 @@ int Menu::manageChoice(unsigned int choice)
                 if (this->FileManager.is_open())
                 {
                     std::getline(this->FileManager, encryptedMessage);
+                    encryptedMessage = this->crypComp.decrypt(encryptedMessage);
                     std::cout << "hasło: " << encryptedMessage << "\n\n";
                 }
                 else
@@ -67,10 +93,26 @@ int Menu::manageChoice(unsigned int choice)
             else
             {
                 this->clearTerminal();
-                std::cout << "Żaden Klucz nie został załadowany!\n\n";
+                std::cout << "Nie załadowano żadnego klucza szyfrującego!\n\n";
             }
             this->displayMenu();
         }
+        return 0;
+    case 4:
+    {
+        int *length = nullptr;
+        do
+        {
+            if (length != nullptr)
+                std::cout << "Hasło musi być dłuższe niż 5 znaków!\n";
+            std::cout << "\n\nPodaj długośc hasła: ";
+            length = new int;
+            std::cin >> *length;
+            this->clearTerminal();
+        } while (length != nullptr && *length < 6);
+        std::cout << "Wygenerowane hasło: " << this->crypComp.generateSafePassword(*length) << "\n\n";
+        this->displayMenu();
+    }
         return 0;
     case 5:
         if (this->crypComp.isKeyLoaded == true)
@@ -88,9 +130,8 @@ int Menu::manageChoice(unsigned int choice)
                 }
                 else if (ans == "Tak")
                 {
-                    std::string examplePath = "c:\\scieżka\\do\\klucza.txt";
-                    std::cout << "\n\nPodaj ścieżkę do klucza ["
-                              << examplePath
+                    std::cout << "\n\nPodaj ścieżkę do klucza [np. "
+                              << this->exampleDirectory
                               << "]: ";
                     std::string path;
                     std::cin >> path;
@@ -120,9 +161,8 @@ int Menu::manageChoice(unsigned int choice)
         }
         else
         {
-            std::string examplePath = "c:\\scieżka\\do\\klucza.txt";
-            std::cout << "\n\nPodaj ścieżkę do klucza ["
-                      << examplePath
+            std::cout << "\n\nPodaj ścieżkę do klucza [np. "
+                      << this->exampleDirectory
                       << "]: ";
             std::string path;
             std::cin >> path;
@@ -170,7 +210,8 @@ int Menu::manageChoice(unsigned int choice)
                     }
                     else
                     {
-                        std::cout << "nadpisywanie klucza!\n";
+                        this->clearTerminal();
+                        std::cout << "nadpisywanie klucza!\n\n";
                         this->FileManager.open("klucz.txt", std::ios::out);
                         this->FileManager << key;
                         this->FileManager.close();

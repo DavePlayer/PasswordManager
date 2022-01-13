@@ -69,6 +69,21 @@ std::string Crypto::encrypt(std::string message)
     return message;
 }
 
+std::string Crypto::generateSafePassword(int length)
+{
+    std::string alphabet{"AaBbCcDdEeFf\"./,<>?GgHhIi*)(_+-=[]{};'JjKkLlMmNnO!@#$oPpQqRrSsTtUuVvWwXxYyZz_.1234567890"};
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> random(0, alphabet.size() - 1); // distribution in range [1, 6]
+
+    std::string password{};
+    for (int i{0}; i < length; i++)
+    {
+        password += alphabet[random(rng)];
+    }
+    return password;
+}
+
 std::string Crypto::decrypt(std::string message)
 {
     for (auto &a : message)

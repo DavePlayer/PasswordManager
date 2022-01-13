@@ -2,6 +2,7 @@
 #include <random>
 #include <iostream>
 #include <string>
+#include <random>
 
 class Crypto
 {
@@ -11,6 +12,8 @@ public:
 
     std::string createKey();
     std::string loadKey(int p, int q, int n, int euler, int e, int d);
+    std::string generateSafePassword(int length);
+    char GenRand();
     bool isPrime(int n);
     int generatePrime(int n);
     int coPrime(int n, int euler);
