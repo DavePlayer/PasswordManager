@@ -22,9 +22,12 @@ std::filesystem::path PathFinder::validatePath(std::filesystem::path path)
             folder += ".txt";
         // std::cout << folder << "\n";
         tempPath = std::filesystem::path(tempPath / std::filesystem::path(folder));
+        if (tempPath == "C:")
+            tempPath += "\\\\";
         if (
             currentPath.string().find(folder) == std::string::npos &&
             std::filesystem::exists(tempPath) == false &&
+            folder.size() > 0 &&
             i != (explodedPath.size() - 1))
         {
             std::cout << "Tworzenie folderu: " << tempPath << "\n";

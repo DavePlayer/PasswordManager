@@ -5,7 +5,7 @@
 
 #ifdef _WIN32
 #define CLEAR "cls"
-#define EXAMPLE_PATH "google/haslo1"
+#define EXAMPLE_PATH "google\\\\konto1\\\\haslo1"
 #define EXAMPLE_DIRECTORY "c:\\\\sciezka\\do\\klucza"
 #define TREE "tree passwd /f > tree.txt"
 #define ISWINDOWS true
