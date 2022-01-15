@@ -15,8 +15,10 @@ public:
     std::fstream FileManager;
     std::string examplePath;
     std::string exampleDirectory;
+    std::string treeCommand;
+    bool isWindows;
 
-    Menu(std::string clearCommand, std::string examplePath, std::string exampleDirectory);
+    Menu(std::string clearCommand, std::string examplePath, std::string exampleDirectory, std::string treeCommand, bool isWindows);
     void clearTerminal();
     void displayMenu();
     int manageChoice(unsigned int choice);

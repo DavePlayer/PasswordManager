@@ -1,10 +1,12 @@
 #include "menu.h"
 
-Menu::Menu(std::string clearCommand, std::string examplePath, std::string exampleDirectory)
+Menu::Menu(std::string clearCommand, std::string examplePath, std::string exampleDirectory, std::string treeCommand, bool isWindows)
 {
     this->clearCommand = clearCommand;
     this->examplePath = examplePath;
     this->exampleDirectory = exampleDirectory;
+    this->treeCommand = treeCommand;
+    this->isWindows = isWindows;
 }
 
 void Menu::displayMenu()
@@ -29,10 +31,28 @@ int Menu::manageChoice(unsigned int choice)
     {
     case 1:
         // display passwords
-        this->clearTerminal();
-        std::cout << "Struktura haseł (passwd jest folderem przechowującym strukturę haseł): \n";
-        system("tree passwd");
-        this->displayMenu();
+        {
+            this->clearTerminal();
+            std::cout << "Struktura haseł (passwd jest folderem przechowującym strukturę haseł): \n\n";
+            system(this->treeCommand.c_str());
+            this->FileManager.open("tree.txt");
+            std::string line;
+            int i = 1;
+            while (std::getline(this->FileManager, line))
+            {
+                if (this->isWindows == true && i < 3)
+                {
+                    std::cout << line << "\n";
+                }
+                else if (this->isWindows == false)
+                {
+                    std::cout << line << "\n";
+                }
+            }
+            std::cout << "\n";
+            this->FileManager.close();
+            this->displayMenu();
+        }
         return 0;
     case 2:
         if (this->crypComp.isKeyLoaded == false)
