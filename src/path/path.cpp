@@ -12,7 +12,7 @@ std::filesystem::path PathFinder::validatePath(std::filesystem::path path)
     //     std::cout << p << "\n";
     // }
     // std::cout << path.string() << "\n";
-    std::vector<std::string> explodedPath = this->split(path.string(), '/');
+    std::vector<std::string> explodedPath = this->split(path.string(), this->isWindows ? '\\' : '/');
     std::filesystem::path currentPath(std::filesystem::current_path());
     std::filesystem::path tempPath("/");
     int i = 0;
@@ -62,11 +62,6 @@ std::string replace(std::string s, char c1, char c2)
 
 std::vector<std::string> PathFinder::split(std::string string, char mark)
 {
-    if (this->isWindows == true)
-    {
-        string = replace(string, '\\', '/');
-        std::cout << string << "\n";
-    }
     std::vector<std::string> words;
     std::string word;
     for (auto x : string)
