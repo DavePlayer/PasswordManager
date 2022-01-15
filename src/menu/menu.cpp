@@ -7,6 +7,7 @@ Menu::Menu(std::string clearCommand, std::string examplePath, std::string exampl
     this->exampleDirectory = exampleDirectory;
     this->treeCommand = treeCommand;
     this->isWindows = isWindows;
+    this->pathFinder = new PathFinder(isWindows);
 }
 
 void Menu::displayMenu()
@@ -38,9 +39,11 @@ int Menu::manageChoice(unsigned int choice)
             this->FileManager.open("tree.txt");
             std::string line;
             int i = 1;
+            if (this->isWindows == true)
+                std::cout << "passwd\n";
             while (std::getline(this->FileManager, line))
             {
-                if (this->isWindows == true && i < 3)
+                if (this->isWindows == true && i > 3)
                 {
                     std::cout << line << "\n";
                 }
@@ -48,6 +51,7 @@ int Menu::manageChoice(unsigned int choice)
                 {
                     std::cout << line << "\n";
                 }
+                i++;
             }
             std::cout << "\n";
             this->FileManager.close();
@@ -66,7 +70,7 @@ int Menu::manageChoice(unsigned int choice)
             std::string userInput;
             std::cin >> userInput;
             std::filesystem::path path(std::filesystem::current_path() / std::filesystem::path("passwd") / std::filesystem::path(userInput));
-            path = this->pathFinder.validatePath(path); // creates unexistent directories and files inside passwd
+            path = this->pathFinder->validatePath(path); // creates unexistent directories and files inside passwd
             std::string password;
             std::cout << "\n\nPodaj swoje hasło: ";
             std::cin >> password;
@@ -253,9 +257,11 @@ int Menu::manageChoice(unsigned int choice)
         std::cout << "Do widzenia!" << std::endl;
         return 0;
     default:
+    {
         this->clearTerminal();
         std::cout << "Niepoprawna opcja!\n";
         this->displayMenu();
+    }
         return 0;
     }
 }

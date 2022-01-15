@@ -1,5 +1,10 @@
 #include "path.h"
 
+PathFinder::PathFinder(bool isWindows)
+{
+    this->isWindows = isWindows;
+}
+
 std::filesystem::path PathFinder::validatePath(std::filesystem::path path)
 {
     // for (const auto &p : std::filesystem::directory_iterator(path))
@@ -37,8 +42,31 @@ std::filesystem::path PathFinder::validatePath(std::filesystem::path path)
     return tempPath;
 };
 
+std::string replace(std::string s, char c1, char c2)
+{
+    int l = s.length();
+
+    // loop to traverse in the string
+    for (int i = 0; i < l; i++)
+    {
+
+        // check for c1 and replace
+        if (s[i] == c1)
+            s[i] = c2;
+
+        else if (s[i] == c2)
+            s[i] = c1;
+    }
+    return s;
+}
+
 std::vector<std::string> PathFinder::split(std::string string, char mark)
 {
+    if (this->isWindows == true)
+    {
+        string = replace(string, '\\', '/');
+        std::cout << string << "\n";
+    }
     std::vector<std::string> words;
     std::string word;
     for (auto x : string)

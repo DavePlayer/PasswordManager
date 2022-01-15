@@ -11,7 +11,7 @@ class Menu
 public:
     std::string clearCommand;
     Crypto crypComp;
-    PathFinder pathFinder;
+    PathFinder *pathFinder;
     std::fstream FileManager;
     std::string examplePath;
     std::string exampleDirectory;
